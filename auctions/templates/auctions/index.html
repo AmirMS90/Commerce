@@ -1,0 +1,25 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h2>Active Listings</h2>
+
+{% if not listings %}
+<p>No Active Listings.</p>
+{% endif %}
+{% for listing in listings %}
+<a href="{% url 'listing' listing.id %}">
+	<section {% if not listing.active %} style="opacity: 60%;" {% endif %}>
+		<h3>{{ listing.title }}</h3>
+		{% if listing in user.watchList.all %}
+		<p style="background-color: darkgray;color: white;width: fit-content; padding: 0.2rem; border-radius: 0.25rem;">
+			Watching</p>
+		{% endif %}
+		{% if listing.image_link %}
+		<img src="{{ listing.image_link }}">
+		{% endif %}
+		<h4>Current Price: {{ listing.current }}</h4>
+		<p>description: {{ listing.description }}</p>
+	</section>
+</a>
+{% endfor %}
+{% endblock %}
